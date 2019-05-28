@@ -44,10 +44,7 @@ public final class DatabaseUserDao extends AbstractDao implements UserDao {
     }
 
     @Override
-    public User add(String name, String email, String password) throws SQLException {
-        if (name == null || "".equals(name)) {
-            throw new IllegalArgumentException("Name cannot be null or empty");
-        }
+    public User add(String email, String password) throws SQLException {
         if (password == null || "".equals(password)) {
             throw new IllegalArgumentException("Password cannot be null or empty");
         }
@@ -56,16 +53,15 @@ public final class DatabaseUserDao extends AbstractDao implements UserDao {
         }
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO users (name, email, password, admin) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO users (email, password, admin) VALUES (?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             statement.setString(1, email);
             statement.setString(2, password);
-            statement.setString(3, name);
-            statement.setBoolean(4, false);
+            statement.setBoolean(3, false);
             executeInsert(statement);
             int id = fetchGeneratedId(statement);
             connection.commit();
-            return new User(id, name, email, password, false);
+            return new User(id, email, password, false);
         } catch (SQLException ex) {
             connection.rollback();
             throw ex;
@@ -76,10 +72,9 @@ public final class DatabaseUserDao extends AbstractDao implements UserDao {
 
     private User fetchUser(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
-        String name = resultSet.getString("name");
         String email = resultSet.getString("email");
         String password = resultSet.getString("password");
         boolean admin = resultSet.getBoolean("admin");
-        return new User(id, name, email, password, admin);
+        return new User(id, email, password, admin);
     }
 }

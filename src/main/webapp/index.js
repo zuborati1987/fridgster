@@ -4,13 +4,15 @@ const UNAUTHORIZED = 401;
 const NOT_FOUND = 404;
 const INTERNAL_SERVER_ERROR = 500;
 
+let menuContentDivEl;
 let loginContentDivEl;
-let profileContentDivEl;
-let couponContentDivEl;
-let couponsContentDivEl;
-let shopContentDivEl;
-let shopsContentDivEl;
-let backToProfileContentDivEl;
+let registerContentDivEl;
+let profileButtonDivEl;
+let welcomeContentDivEl;
+let storagesContentDivEl;
+let storageContentDivEl;
+let searchContentDivEl;
+let shoppingContentDivEl;
 let logoutContentDivEl;
 
 function newInfo(targetEl, message) {
@@ -98,21 +100,26 @@ function setUnauthorized() {
 }
 
 function onLoad() {
+    menuContentDivEl = document.getElementById('user-menu-content');
     loginContentDivEl = document.getElementById('login-content');
-    profileContentDivEl = document.getElementById('profile-content');
-    couponContentDivEl = document.getElementById('coupon-content');
-    couponsContentDivEl = document.getElementById('coupons-content');
-    shopContentDivEl = document.getElementById('shop-content');
-    shopsContentDivEl = document.getElementById('shops-content');
-    backToProfileContentDivEl = document.getElementById('back-to-profile-content');
-    logoutContentDivEl = document.getElementById('logout-content');
+    registerContentDivEl = document.getElementById('register-content');
+    profileButtonDivEl = document.getElementById('back-to-profile-content');
+    welcomeContentDivEl = document.getElementById('welcome-content');
+    storagesContentDivEl = document.getElementById('storages-content');
+    storageContentDivEl = document.getElementById('storage-content');
+    searchContentDivEl = document.getElementById('search-content');
+    shoppingContentDivEl = document.getElementById('shopping-list-content');
+    logoutContentDivEl = document.getElementById('logout-content')
 
     const loginButtonEl = document.getElementById('login-button');
     loginButtonEl.addEventListener('click', onLoginButtonClicked);
 
+  /*  const registrationButtonEl = document.getElementById('registration-button');
+    registrationButtonEl.addEventListener('click', onRegistrationButtonClicked);
+
     const logoutButtonEl = document.getElementById('logout-button');
     logoutButtonEl.addEventListener('click', onLogoutButtonClicked);
-
+*/
     if (hasAuthorization()) {
         onProfileLoad(getAuthorization());
     }

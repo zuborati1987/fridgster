@@ -1,7 +1,8 @@
 package com.codecool.model;
 
-import java.sql.Date;
 import java.util.Objects;
+import java.time.LocalDate;
+
 
 public class Food extends AbstractModel {
 
@@ -10,10 +11,10 @@ public class Food extends AbstractModel {
     public final double amount;
     public final int measurementId;
     public final int storageId;
-    public final Date expiry;
+    public final LocalDate expiry;
     public final int userId;
 
-    public Food(int id, String name, int categoryId, double amount, int measurementId, int storageId, Date expiry, int userId) {
+    public Food(int id, String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) {
         super(id);
         this.name = name;
         this.categoryId = categoryId;
@@ -44,7 +45,7 @@ public class Food extends AbstractModel {
         return storageId;
     }
 
-    public Date getExpiry() {
+    public LocalDate getExpiry() {
         return expiry;
     }
 

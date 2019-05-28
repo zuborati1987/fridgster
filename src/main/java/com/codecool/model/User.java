@@ -4,14 +4,12 @@ import java.util.Objects;
 
 public final class User extends AbstractModel {
 
-    private final String name;
     private final String email;
     private final String password;
     private final boolean admin;
 
-    public User(int id, String name, String email, String password, boolean admin) {
+    public User(int id, String email, String password, boolean admin) {
         super(id);
-        this.name = name;
         this.email = email;
         this.password = password;
         this.admin = admin;
@@ -25,9 +23,6 @@ public final class User extends AbstractModel {
         return password;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public boolean isAdmin() {
         return admin;
@@ -40,12 +35,11 @@ public final class User extends AbstractModel {
         if (!super.equals(o)) return false;
         User user = (User) o;
         return Objects.equals(email, user.email) &&
-            Objects.equals(password, user.password) &&
-            Objects.equals(name, user.name);
+            Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, email, password);
+        return Objects.hash(super.hashCode(), email, password);
     }
 }

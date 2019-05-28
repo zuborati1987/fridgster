@@ -5,23 +5,44 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <c:url value="/index.js" var="indexScriptUrl"/>
         <c:url value="/style.css" var="styleUrl"/>
         <c:url value="/login.js" var="loginScriptUrl"/>
         <c:url value="/back-to-profile.js" var="backToProfileScriptUrl"/>
+        <c:url value="/profile.js" var="profileScriptUrl"/>
         <c:url value="/logout.js" var="logoutScriptUrl"/>
-        <link rel="stylesheet" type="text/css" href="${styleUrl}">
+        <c:url value="/register.js" var="registerScriptUrl"/>
+        <c:url value="/auth.js" var="authScriptUrl"/>
+        <c:url value="/date_adder.js" var="dateAdderScriptUrl"/>
+
+        <script src="${dateAdderScriptUrl}"></script>
+        <script src="${authScriptUrl}"></script>
+        <script src="${registerScriptUrl}"></script>
+        <script src="${indexScriptUrl}"></script>
         <script src="${loginScriptUrl}"></script>
         <script src="${backToProfileScriptUrl}"></script>
+        <script src="${profileScriptUrl}"></script>
         <script src="${logoutScriptUrl}"></script>
+        <link rel="stylesheet" type="text/css" href="${styleUrl}">
         <title>Fridgster</title>
     </head>
 <body>
+<div id="user-menu-content" class="hidden content">
+    <table>
+        <tr id= user-menu-tr>
+            <td><a href="javascript:void(0);" onclick="onStoragesClicked();">Storages</a></td>
+            <td><a href="javascript:void(0);" onclick="onSearchClicked();">Search</a></td>
+            <td><a href="javascript:void(0);" onclick="onShoppingListClicked();">Shopping List</a></td>
+            <td><a href="javascript:void(0);" id="logout-button" onclick=onLogoutButtonClicked()>Logout </a></td>
+    </table>
+</div>
 <div id="login-content" class="content">
     <h1>Login</h1>
     <form id="login-form" onsubmit="return false;">
-        <input type="text" name="email">
-        <input type="password" name="password">
+        <input type="text" name="email" placeholder="e-mail">
+        <input type="password" name="password" placeholder="name">
         <button id="login-button">Login</button>
+        <button id="register-button" onclick=onRegisterButtonClicked()>Register</button>
     </form>
 </div>
 <div id="register-content" class="hidden content">
@@ -33,16 +54,11 @@
         <br>
         <input type="password" name="repassword" placeholder="Re-enter password">
         <br>
-        <input type="text" name="name" placeholder="Name">
-        <br>
-        <button id="registration-button">Register</button>
+        <button id="registration-button" onclick=onRegistrationButtonClicked()>Register</button>
     </form>
 </div>
 <div id="back-to-profile-content" class="hidden content">
     <button onclick="onBackToProfileClicked();">Back to profile</button>
-</div>
-<div id="logout-content" class="hidden content">
-    <button id="logout-button">Logout</button>
 </div>
 <div id="welcome-content" class="hidden content">
     <h1>Close expiry</h1>
@@ -56,13 +72,8 @@
         <tbody>
         </tbody>
     </table>
-    <ul>
-        <li><a href="javascript:void(0);" onclick="onStoragesClicked();">Storages</a></li>
-        <li><a href="javascript:void(0);" onclick="onSearchClicked();">Search</a></li>
-        <li><a href="javascript:void(0);" onclick="onShoppingListClicked();">Shopping list</a></li>
-    </ul>
 </div>
-<div id="Storages-content" class="hidden content">
+<div id="storages-content" class="hidden content">
     <h1>Storages</h1>
     <table id="storages">
         <thead>
@@ -135,7 +146,7 @@
     </table>
     </form>
 </div>
-<div id="shopping-list" class="hidden content">
+<div id="shopping-list-content" class="hidden content">
     <table id="shoppinglist">
         <thead>
         <tr>

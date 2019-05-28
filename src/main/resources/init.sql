@@ -8,11 +8,9 @@ DROP TABLE IF EXISTS shopping_lists CASCADE;
 
 CREATE TABLE users (
        id SERIAL PRIMARY KEY,
-       name TEXT UNIQUE NOT NULL,
        email TEXT UNIQUE NOT NULL,
        password TEXT NOT NULL,
        admin BOOLEAN NOT NULL,
-       CONSTRAINT name_not_empty CHECK (name <> ''),
        CONSTRAINT email_not_empty CHECK (email <> ''),
        CONSTRAINT password_not_empty CHECK (password <> '')
 );
@@ -47,10 +45,11 @@ CREATE TABLE food (
       category_id INTEGER NOT NULL,
       measurement_id INTEGER NOT NULL,
       amount DOUBLE PRECISION NOT NULL ,
-      storage_id INTEGER NOT NULL,
+      storage_id INTEGER,
       expiry DATE,
       user_id INTEGER,
       CONSTRAINT name_not_empty CHECK (name <> ''),
+      CONSTRAINT amount_not_negative CHECK (amount >= 0),
       FOREIGN KEY (user_id) REFERENCES users(id),
       FOREIGN KEY (category_id) REFERENCES categories(id),
       FOREIGN KEY (measurement_id) REFERENCES measurements(id),
@@ -58,18 +57,20 @@ CREATE TABLE food (
 );
 
 CREATE TABLE shopping_lists (
-    user_id INTEGER,
-    food_id INTEGER,
+    user_id INTEGER NOT NULL,
+    food_id INTEGER NOT NULL,
     amount DOUBLE PRECISION,
+    CONSTRAINT amount_not_zero CHECK (amount > 0),
     PRIMARY KEY (user_id, food_id),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (food_id) REFERENCES food(id)
 );
 
-INSERT INTO users (name, email, password, admin) VALUES
-    ('jake', 'jake@armitage', 'drake', TRUE),       -- 1
-    ('justin', 'justin@xiang', 'yenlowang', FALSE), -- 2
-    ('paul', 'paul@atreides', 'muaddib', FALSE);    -- 3
+INSERT INTO users (email, password, admin) VALUES
+    ('a', 'a', TRUE),       -- 1
+    ('justin@xiang', 'yenlowang', FALSE), -- 2
+    ('paul@atreides', 'muaddib', FALSE),    -- 3
+    ('jake@armitage', 'drake', TRUE);
 
 INSERT INTO storages (name, user_id) VALUES
     ('fridge', 1),             -- 1

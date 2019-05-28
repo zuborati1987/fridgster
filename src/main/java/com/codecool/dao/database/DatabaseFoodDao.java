@@ -4,12 +4,13 @@ import com.codecool.dao.FoodDao;
 import com.codecool.model.Food;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseFoodDao extends AbstractDao implements FoodDao {
 
-    DatabaseFoodDao(Connection connection) {
+    public DatabaseFoodDao(Connection connection) {
         super(connection);
     }
 
@@ -66,7 +67,7 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
     }
 
     @Override
-    public List<Food> findAllByExpiry() throws SQLException {
+    public List<Food> findAllByExpiry(String userId) throws SQLException {
         List<Food> foods = new ArrayList<>();
         String sql = "SELECT * FROM food ORDER BY expiry ASC";
         try (Statement statement = connection.createStatement();
@@ -108,7 +109,7 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
     }
 
     @Override
-    public Food add(String name, int categoryId, double amount, int measurementId, int storageId, Date expiry, int userId) throws SQLException {
+    public Food add(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException {
         if (name == null || "".equals(name)) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
@@ -124,7 +125,7 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
             statement.setDouble(3, amount);
             statement.setInt(4, measurementId);
             statement.setInt(5, storageId);
-            statement.setDate(6, expiry);
+            statement.setObject(6, expiry);
             statement.setInt(7, userId);
             executeInsert(statement);
             int id = fetchGeneratedId(statement);
@@ -157,8 +158,9 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
         int measurementId = resultSet.getInt("measurement_id");
         int storageId = resultSet.getInt("storage_id");
         Date expiry = resultSet.getDate("expiry");
+        LocalDate localDate = expiry.toLocalDate();
         int userId = resultSet.getInt("user_id");
-        return new Food(id, name, categoryId, amount, measurementId, storageId, expiry, userId);
+        return new Food(id, name, categoryId, amount, measurementId, storageId, localDate, userId);
     }
 
 
