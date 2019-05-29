@@ -70,7 +70,7 @@ INSERT INTO users (email, password, admin) VALUES
     ('a', 'a', TRUE),       -- 1
     ('justin@xiang', 'yenlowang', FALSE), -- 2
     ('paul@atreides', 'muaddib', FALSE),    -- 3
-    ('jake@armitage', 'drake', TRUE);
+    ('jake@armitage', 'drake', TRUE); --4
 
 INSERT INTO storages (name, user_id) VALUES
     ('fridge', 1),             -- 1
@@ -113,12 +113,12 @@ INSERT INTO measurements (name, user_id) VALUES
 
 INSERT INTO food (name, category_id, amount, measurement_id, storage_id, expiry, user_id) VALUES
     ('orange', 7, 1, 4, 1, '2019-06-12', 1),              -- 1
-    ('milk', 1, 2, 2, 6, '2019-06-13', 1),                -- 2
+    ('milk', 1, 2, 2, 1, '2019-06-13', 1),                -- 2
     ('cheese', 1, 0.5, 1, 1, '2019-06-14', 1),              -- 3
     ('carrot', 8, 5, 4, 8, '2019-06-15', 2),              -- 4
     ('coke', 5, 1, 5, 6, '2019-06-16', 2),                -- 5
-    ('pork chop', 12, 5, 1, 1, '2019-06-17', 2),           -- 6
-    ('flour', 9, 2, 1, 9, '2019-06-18', 2),               -- 7
+    ('pork chop', 12, 5, 1, 6, '2019-06-17', 2),           -- 6
+    ('flour', 9, 2, 1, 9, '2019-06-18', 3),               -- 7
     ('rice', 9, 3, 1, 10, '2019-06-19', 3),                -- 8
     ('mars bar', 4, 1, 9, 11, '2019-06-20', 3),            -- 9
     ('cheetos', 3, 1, 8, 11, '2019-06-21', 3);             -- 10

@@ -117,6 +117,22 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
         return foods;
     }
 
+    @Override
+    public List<Food> findByStorage(String user_id, String storageId) throws SQLException {
+        List<Food> foods = new ArrayList<>();
+        String sql = "SELECT food.id, food.name, c.name AS category, amount, m.name AS measurement, s.name AS storage, expiry, food.user_id as user_id FROM food INNER JOIN categories c on food.category_id = c.id INNER JOIN measurements m on food.measurement_id = m.id INNER JOIN storages s on food.storage_id = s.id WHERE storage_id = ? AND food.user_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, Integer.parseInt(storageId));
+            statement.setInt(2, Integer.parseInt(user_id));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    foods.add(fetchFood(resultSet));
+                }
+            }
+        }
+        return foods;
+    }
+
     /*@Override
     public Food add(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException {
         if (name == null || "".equals(name)) {

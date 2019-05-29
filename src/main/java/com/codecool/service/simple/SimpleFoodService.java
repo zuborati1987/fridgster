@@ -3,6 +3,7 @@ package com.codecool.service.simple;
 import com.codecool.dao.FoodDao;
 import com.codecool.model.Food;
 import com.codecool.service.FoodService;
+import com.codecool.service.exception.ServiceException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -41,5 +42,9 @@ public class SimpleFoodService extends AbstractService implements FoodService {
 
     public List<Food> findByName(String name, String userId) throws SQLException {
         return foodDao.findByName(name, userId);
+    }
+
+    public List<Food> findByStorage(String user_id, String storageId) throws SQLException, ServiceException {
+        return foodDao.findByStorage(user_id, storageId);
     }
 }

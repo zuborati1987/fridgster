@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface StorageDao {
 
-    List<Storage> findAll() throws SQLException;
+    List<Storage> findAll(String id) throws SQLException;
 
-    Storage findById(int id) throws SQLException;
+    Storage findById(String id) throws SQLException;
 
     Storage add(String name, int userId) throws SQLException;
 

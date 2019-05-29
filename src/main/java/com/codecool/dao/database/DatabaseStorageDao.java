@@ -14,13 +14,15 @@ public final class DatabaseStorageDao extends AbstractDao implements StorageDao 
     }
 
     @Override
-    public List<Storage> findAll() throws SQLException {
+    public List<Storage> findAll(String id) throws SQLException {
         List<Storage> storages = new ArrayList<>();
-        String sql = "SELECT id, name, user_id FROM storages";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-            while (resultSet.next()) {
-                storages.add(fetchStorage(resultSet));
+        String sql = "SELECT id, name, user_id FROM storages WHERE user_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, Integer.parseInt(id));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    storages.add(fetchStorage(resultSet));
+                }
             }
         }
         return storages;
@@ -28,10 +30,10 @@ public final class DatabaseStorageDao extends AbstractDao implements StorageDao 
 
 
     @Override
-    public Storage findById(int id) throws SQLException {
+    public Storage findById(String id) throws SQLException {
         String sql = "SELECT id, name, user_id FROM storages WHERE id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, id);
+            statement.setInt(1, Integer.parseInt(id));
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return fetchStorage(resultSet);

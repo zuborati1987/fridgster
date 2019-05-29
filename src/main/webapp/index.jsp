@@ -15,7 +15,12 @@
         <c:url value="/auth.js" var="authScriptUrl"/>
         <c:url value="/date_adder.js" var="dateAdderScriptUrl"/>
         <c:url value="/search.js" var="searchScriptUrl"/>
+        <c:url value="/storages.js" var="storagesScriptUrl"/>
+        <c:url value="/storage.js" var="storageScriptUrl"/>
 
+
+        <script src="${storageScriptUrl}"></script>
+        <script src="${storagesScriptUrl}"></script>
         <script src="${authScriptUrl}"></script>
         <script src="${registerScriptUrl}"></script>
         <script src="${indexScriptUrl}"></script>
