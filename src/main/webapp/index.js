@@ -14,6 +14,7 @@ let storageContentDivEl;
 let searchContentDivEl;
 let shoppingContentDivEl;
 let logoutContentDivEl;
+let resultsContentDivEl;
 
 function newInfo(targetEl, message) {
     newMessage(targetEl, 'info', message);
@@ -109,7 +110,8 @@ function onLoad() {
     storageContentDivEl = document.getElementById('storage-content');
     searchContentDivEl = document.getElementById('search-content');
     shoppingContentDivEl = document.getElementById('shopping-list-content');
-    logoutContentDivEl = document.getElementById('logout-content')
+    logoutContentDivEl = document.getElementById('logout-content');
+    resultsContentDivEl = document.getElementById('results-content')
 
     const loginButtonEl = document.getElementById('login-button');
     loginButtonEl.addEventListener('click', onLoginButtonClicked);

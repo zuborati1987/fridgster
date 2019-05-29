@@ -11,11 +11,11 @@ public interface FoodDao {
 
     List<Food> findAll() throws SQLException;
 
-    List<Food> findAllByName() throws SQLException;
+    List<Food> findAllByName(String userId) throws SQLException;
 
-    List<Food> findAllByCategory() throws SQLException;
+    List<Food> findAllByCategory(String userId) throws SQLException;
 
-    List<Food> findAllByStorage() throws SQLException;
+    List<Food> findAllByStorage(String userId) throws SQLException;
 
     List<Food> findAllByExpiry(String userId) throws SQLException;
 

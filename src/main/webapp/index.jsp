@@ -14,14 +14,16 @@
         <c:url value="/register.js" var="registerScriptUrl"/>
         <c:url value="/auth.js" var="authScriptUrl"/>
         <c:url value="/date_adder.js" var="dateAdderScriptUrl"/>
+        <c:url value="/search.js" var="searchScriptUrl"/>
 
-        <script src="${dateAdderScriptUrl}"></script>
         <script src="${authScriptUrl}"></script>
         <script src="${registerScriptUrl}"></script>
         <script src="${indexScriptUrl}"></script>
         <script src="${loginScriptUrl}"></script>
         <script src="${backToProfileScriptUrl}"></script>
         <script src="${profileScriptUrl}"></script>
+        <script src="${searchScriptUrl}"></script>
+        <script src="${dateAdderScriptUrl}"></script>
         <script src="${logoutScriptUrl}"></script>
         <link rel="stylesheet" type="text/css" href="${styleUrl}">
         <title>Fridgster</title>
@@ -119,17 +121,18 @@
     <h1>Search options</h1>
     <form>
         <p>List by: </p>
-        <select name="list">
-            <option>Name</option>
-            <option>Category</option>
-            <option>Place of storage</option>
-            <option>Date of expiry</option>
+        <select id="list" onChange="onOptionSelected()">
+            <option value="" disabled selected>Select an option</option>
+            <option value="name">Name</option>
+            <option value="category">Category</option>
+            <option value="storage">Place of storage</option>
+            <option value="expiry">Date of expiry</option>
         </select>
     </form>
     <form>
         <p>Search by name: </p>
         <input type="text" name="name">
-    <table id="results" class="hidden content">
+    <table id="results-content" class="hidden content">
         <thead>
         <tr>
             <th>Name</th>

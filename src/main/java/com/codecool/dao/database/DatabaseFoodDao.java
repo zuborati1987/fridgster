@@ -28,39 +28,45 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
     }
 
     @Override
-    public List<Food> findAllByName() throws SQLException {
+    public List<Food> findAllByName(String userId) throws SQLException {
         List<Food> foods = new ArrayList<>();
-        String sql = "SELECT * FROM food ORDER BY name ASC";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-            while (resultSet.next()) {
-                foods.add(fetchFood(resultSet));
+        String sql = "SELECT * FROM food WHERE food.user_id = ? ORDER BY name ASC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, Integer.parseInt(userId));
+            try(ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    foods.add(fetchFood(resultSet));
+                }
             }
         }
         return foods;
     }
 
     @Override
-    public List<Food> findAllByCategory() throws SQLException {
+    public List<Food> findAllByCategory(String userId) throws SQLException {
         List<Food> foods = new ArrayList<>();
-        String sql = "SELECT * FROM food INNER JOIN categories c on food.category_id = c.id ORDER BY c.name ASC";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-            while (resultSet.next()) {
-                foods.add(fetchFood(resultSet));
+        String sql = "SELECT * FROM food INNER JOIN categories c on food.category_id = c.id WHERE food.user_id = ? ORDER BY c.name ASC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, Integer.parseInt(userId));
+            try(ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    foods.add(fetchFood(resultSet));
+                }
             }
         }
         return foods;
     }
 
     @Override
-    public List<Food> findAllByStorage() throws SQLException {
+    public List<Food> findAllByStorage(String userId) throws SQLException {
         List<Food> foods = new ArrayList<>();
-        String sql = "SELECT * FROM food INNER JOIN storages s on food.storage_id = s.id ORDER BY s.name ASC";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-            while (resultSet.next()) {
-                foods.add(fetchFood(resultSet));
+        String sql = "SELECT * FROM food INNER JOIN storages s on food.storage_id = s.id WHERE food.user_id = ? ORDER BY s.name ASC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, Integer.parseInt(userId));
+            try(ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    foods.add(fetchFood(resultSet));
+                }
             }
         }
         return foods;
@@ -69,11 +75,13 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
     @Override
     public List<Food> findAllByExpiry(String userId) throws SQLException {
         List<Food> foods = new ArrayList<>();
-        String sql = "SELECT * FROM food ORDER BY expiry ASC";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(sql)) {
-            while (resultSet.next()) {
-                foods.add(fetchFood(resultSet));
+        String sql = "SELECT * FROM food WHERE food.user_id = ? ORDER BY expiry ASC";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, Integer.parseInt(userId));
+            try(ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    foods.add(fetchFood(resultSet));
+                }
             }
         }
         return foods;

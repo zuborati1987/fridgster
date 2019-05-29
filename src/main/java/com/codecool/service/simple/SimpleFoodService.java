@@ -18,4 +18,24 @@ public class SimpleFoodService extends AbstractService implements FoodService {
     public List<Food> findExpiries(String userId) throws SQLException {
         return foodDao.findAllByExpiry(userId);
     }
+
+    @Override
+    public List<Food> findAllByName(String userId) throws SQLException {
+        return foodDao.findAllByName(userId);
+    }
+
+    @Override
+    public List<Food> findAllByStorage(String userId) throws SQLException {
+        return foodDao.findAllByStorage(userId);
+    }
+
+    @Override
+    public List<Food> findAllByCategory(String userId) throws SQLException {
+        return foodDao.findAllByCategory(userId);
+    }
+
+    @Override
+    public List<Food> findAllByExpiry(String userId) throws SQLException {
+        return foodDao.findAllByExpiry(userId);
+    }
 }
