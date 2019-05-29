@@ -131,7 +131,7 @@
     </form>
     <form>
         <p>Search by name: </p>
-        <input type="text" name="name">
+        <input type="text" id="search-name" oninput="onSearchByName()">
     <table id="results-content" class="hidden content">
         <thead>
         <tr>

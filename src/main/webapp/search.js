@@ -17,6 +17,21 @@ function onOptionSelected() {
     xhr.send(params);
 }
 
+function onSearchByName() {
+
+    const tofind = document.getElementById("search-name").value;
+    const selected = "search";
+    const params = new URLSearchParams();
+    params.append('selected', selected);
+    params.append('tofind', tofind);
+
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener('load', onSearchResponse);
+    xhr.addEventListener('error', onNetworkError);
+    xhr.open('POST', 'protected/search');
+    xhr.send(params);
+}
+
 function onSearchResponse() {
     if (this.status === OK) {
         showContents(['user-menu-content','results-content', 'search-content', 'logout-content']);

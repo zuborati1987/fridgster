@@ -17,4 +17,6 @@ public interface FoodService{
     List<Food> findAllByCategory(String userId) throws SQLException, ServiceException;
 
     List<Food> findAllByExpiry(String userId) throws SQLException, ServiceException;
+
+    List<Food> findByName(String name, String userId) throws SQLException;
 }

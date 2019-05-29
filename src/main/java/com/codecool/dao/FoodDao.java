@@ -21,7 +21,7 @@ public interface FoodDao {
 
     Food findById(int id) throws SQLException;
 
-    Food findByName(String name, int userId) throws SQLException;
+    List<Food> findByName(String name, String userId) throws SQLException;
 
 /*
     Food add(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException;

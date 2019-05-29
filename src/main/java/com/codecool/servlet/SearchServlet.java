@@ -42,6 +42,9 @@ public class SearchServlet extends AbstractServlet {
                 food = foodService.findAllByCategory(id);
             } else if (selected.equals("expiry")) {
                 food = foodService.findAllByExpiry(id);
+            } else if (selected.equals("search")) {
+                String tofind = req.getParameter("tofind");
+                food = foodService.findByName(tofind, id);
             }
 
             sendMessage(resp, SC_OK, food);

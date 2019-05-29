@@ -38,4 +38,8 @@ public class SimpleFoodService extends AbstractService implements FoodService {
     public List<Food> findAllByExpiry(String userId) throws SQLException {
         return foodDao.findAllByExpiry(userId);
     }
+
+    public List<Food> findByName(String name, String userId) throws SQLException {
+        return foodDao.findByName(name, userId);
+    }
 }
