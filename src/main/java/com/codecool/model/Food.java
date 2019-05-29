@@ -7,20 +7,20 @@ import java.time.LocalDate;
 public class Food extends AbstractModel {
 
     public final String name;
-    public final int categoryId;
+    public final String category;
     public final double amount;
-    public final int measurementId;
-    public final int storageId;
+    public final String measurement;
+    public final String storage;
     public final LocalDate expiry;
     public final int userId;
 
-    public Food(int id, String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) {
+    public Food(int id, String name, String category, double amount, String measurement, String storage, LocalDate expiry, int userId) {
         super(id);
         this.name = name;
-        this.categoryId = categoryId;
+        this.category = category;
         this.amount = amount;
-        this.measurementId = measurementId;
-        this.storageId = storageId;
+        this.measurement = measurement;
+        this.storage = storage;
         this.expiry = expiry;
         this.userId = userId;
     }
@@ -29,20 +29,20 @@ public class Food extends AbstractModel {
         return name;
     }
 
-    public int getCategoryId() {
-        return categoryId;
+    public String getCategory() {
+        return category;
     }
 
     public double getAmount() {
         return amount;
     }
 
-    public int getMeasurementId() {
-        return measurementId;
+    public String getMeasurement() {
+        return measurement;
     }
 
-    public int getStorageId() {
-        return storageId;
+    public String getStorage() {
+        return storage;
     }
 
     public LocalDate getExpiry() {
@@ -60,13 +60,13 @@ public class Food extends AbstractModel {
         if (!super.equals(o)) return false;
         Food food = (Food) o;
         return Objects.equals(name, food.name) &&
-            categoryId == food.categoryId &&
-            measurementId == food.measurementId &&
+            category.equals(food.category) &&
+            measurement.equals(food.measurement) &&
             userId == food.userId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, measurementId, userId);
+        return Objects.hash(super.hashCode(), name, measurement, userId);
     }
 }

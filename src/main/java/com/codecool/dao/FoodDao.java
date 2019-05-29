@@ -23,7 +23,9 @@ public interface FoodDao {
 
     Food findByName(String name, int userId) throws SQLException;
 
+/*
     Food add(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException;
+*/
 
     void delete(String name, int userId) throws SQLException;
 }

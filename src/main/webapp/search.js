@@ -47,13 +47,13 @@ function appendResult(resultData) {
     const nameTdEl = document.createElement('td');
     nameTdEl.textContent =resultData.name;
     const categoryTdEl = document.createElement('td');
-    categoryTdEl.textContent = resultData.categoryId;
+    categoryTdEl.textContent = resultData.category;
     const amountTdEl = document.createElement('td');
     amountTdEl.textContent = resultData.amount;
     const measurementTdEl = document.createElement('td');
-    measurementTdEl.textContent = resultData.measurementId;
+    measurementTdEl.textContent = resultData.measurement;
     const storageTdEl = document.createElement('td');
-    storageTdEl.textContent = resultData.storageId;
+    storageTdEl.textContent = resultData.storage;
     const expiryTdEl = document.createElement('td');
     let expiryDate = new Date(convertDate(resultData.expiry));
     expiryTdEl.textContent = getDateStr(expiryDate);
