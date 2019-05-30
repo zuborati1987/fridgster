@@ -1,6 +1,10 @@
 function onStorageClicked() {
     clearMessages();
-    showContents(['storage-content', 'logout-content', 'user-menu-content', 'storages-content']);
+    if(getAuthorization().admin === true) {
+        showContents(['storage-content', 'logout-content', 'admin-menu-content', 'storages-content']);
+    } else {
+        showContents(['storage-content', 'logout-content', 'user-menu-content', 'storages-content']);
+    }
 
     const storageId = this.dataset.storageId;
     const params = new URLSearchParams();
@@ -14,7 +18,11 @@ function onStorageClicked() {
 
 function onStorageResponse() {
     if (this.status === OK) {
-        showContents(['user-menu-content','storage-content', 'storages-content']);
+        if(getAuthorization().admin === true) {
+            showContents(['admin-menu-content','storage-content', 'storages-content']);
+        } else {
+            showContents(['user-menu-content','storage-content', 'storages-content']);
+        }
         onStorageLoad(JSON.parse(this.responseText));
     } else {
         onOtherResponse(storageContentDivEl, this);

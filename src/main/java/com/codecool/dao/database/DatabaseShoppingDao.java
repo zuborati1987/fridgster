@@ -18,7 +18,7 @@ public class DatabaseShoppingDao extends AbstractDao implements ShoppingDao {
     @Override
     public List<ShoppingList> findAll(int userId) throws SQLException {
         List<ShoppingList> shoppingList = new ArrayList<>();
-        String sql = "SELECT f.name AS name, m.name AS measurement, shopping_lists.amount AS amount FROM shopping_lists INNER JOIN food f on shopping_lists.food_id = f.id INNER JOIN measurements m on f.measurement_id = m.id WHERE shopping_lists.user_id = ?";
+        String sql = "SELECT f.id AS id, f.name AS name, m.name AS measurement, shopping_lists.amount AS amount FROM shopping_lists INNER JOIN food f on shopping_lists.food_id = f.id INNER JOIN measurements m on f.measurement_id = m.id WHERE shopping_lists.user_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
             try(ResultSet resultSet = statement.executeQuery()) {
@@ -61,9 +61,10 @@ public class DatabaseShoppingDao extends AbstractDao implements ShoppingDao {
     }
 
     private ShoppingList fetchShoppingList(ResultSet resultSet) throws SQLException {
+        int foodId = resultSet.getInt("id");
         String name = resultSet.getString("name");
         double amount = resultSet.getDouble("amount");
         String measurement = resultSet.getString("measurement");
-        return new ShoppingList(name, amount, measurement);
+        return new ShoppingList(foodId, name, amount, measurement);
     }
 }

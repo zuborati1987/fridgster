@@ -1,6 +1,10 @@
 function onStoragesClicked() {
     clearMessages();
-    showContents(['storages-content', 'logout-content', 'user-menu-content']);
+    if(getAuthorization().admin === true) {
+        showContents(['storages-content', 'logout-content', 'admin-menu-content']);
+    } else {
+        showContents(['storages-content', 'logout-content', 'user-menu-content']);
+    }
 
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', onStoragesResponse);
@@ -11,7 +15,11 @@ function onStoragesClicked() {
 
 function onStoragesResponse() {
     if (this.status === OK) {
-        showContents(['user-menu-content','storages-content']);
+        if(getAuthorization().admin === true) {
+            showContents(['admin-menu-content','storages-content']);
+        } else {
+            showContents(['user-menu-content','storages-content']);
+        }
         onStoragesLoad(JSON.parse(this.responseText));
     } else {
         onOtherResponse(storagesContentDivEl, this);
@@ -56,7 +64,11 @@ function appendStorage(storageData) {
 
 function onStorageAddClicked() {
     clearMessages();
-    showContents(['storages-content', 'logout-content', 'user-menu-content']);
+    if(getAuthorization().admin === true) {
+        showContents(['storages-content', 'logout-content', 'admin-menu-content']);
+    } else {
+        showContents(['storages-content', 'logout-content', 'user-menu-content']);
+    }
 
     const toAdd = document.getElementById("addStorage").value;
     const params = new URLSearchParams();

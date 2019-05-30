@@ -70,6 +70,16 @@ public final class DatabaseUserDao extends AbstractDao implements UserDao {
         }
     }
 
+    @Override
+    public void delete(int userId) throws SQLException {
+        String sql = "DELETE FROM users WHERE id = ?;";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+        }
+    }
+
     private User fetchUser(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String email = resultSet.getString("email");

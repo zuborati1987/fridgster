@@ -1,7 +1,11 @@
 
-function onProfileLoad(user) {
+function onProfileLoad() {
     clearMessages();
-    showContents(['welcome-content', 'logout-content', 'user-menu-content']);
+    if(getAuthorization().admin === true) {
+        showContents(['welcome-content', 'logout-content', 'admin-menu-content']);
+    } else {
+        showContents(['welcome-content', 'logout-content', 'user-menu-content']);
+    }
 
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', onExpiryResponse);
@@ -12,7 +16,11 @@ function onProfileLoad(user) {
 
 function onExpiryResponse() {
     if (this.status === OK) {
-        showContents(['user-menu-content','welcome-content']);
+        if(getAuthorization().admin === true) {
+            showContents(['admin-menu-content', 'welcome-content']);
+        } else {
+            showContents(['user-menu-content', 'welcome-content']);
+        }
         onExpiryLoad(JSON.parse(this.responseText));
     } else {
         onOtherResponse(welcomeContentDivEl, this);

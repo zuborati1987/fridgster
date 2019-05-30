@@ -1,6 +1,10 @@
 function onShoppingListClicked() {
     clearMessages();
-    showContents(['shopping-list-content', 'logout-content', 'user-menu-content']);
+    if(getAuthorization().admin === true) {
+        showContents(['shopping-list-content', 'logout-content', 'admin-menu-content']);
+    } else {
+        showContents(['shopping-list-content', 'logout-content', 'user-menu-content']);
+    }
 
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', onShoppingResponse);
@@ -11,7 +15,11 @@ function onShoppingListClicked() {
 
 function onShoppingResponse() {
     if (this.status === OK) {
-        showContents(['user-menu-content','shopping-list-content']);
+        if(getAuthorization().admin === true) {
+            showContents(['admin-menu-content','shopping-list-content']);
+        } else {
+            showContents(['user-menu-content','shopping-list-content']);
+        }
         onShoppingLoad(JSON.parse(this.responseText));
     } else {
         onOtherResponse(shoppingContentDivEl, this);
@@ -42,7 +50,7 @@ function appendRequired(required) {
     amountTdEl.textContent = required.amount;
     const measurementTdEl = document.createElement('td');
     measurementTdEl.textContent = required.measurement;
-    const delChkBox = createCheckBoxTd('shopping-del', required.name);
+    const delChkBox = createCheckBoxTd('shopping-del', required.id);
     const trEl = document.createElement('tr');
 
     trEl.appendChild(nameTdEl);

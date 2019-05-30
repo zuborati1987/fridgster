@@ -13,5 +13,5 @@ public interface UserDao {
 
     User add(String email, String password) throws SQLException;
 
-
+    void delete(int userId) throws SQLException;
 }

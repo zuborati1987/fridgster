@@ -15,6 +15,8 @@ let searchContentDivEl;
 let shoppingContentDivEl;
 let logoutContentDivEl;
 let resultsContentDivEl;
+let adminContentDivEl;
+let adminMenuContentDivEl;
 
 function newInfo(targetEl, message) {
     newMessage(targetEl, 'info', message);
@@ -126,6 +128,7 @@ function setUnauthorized() {
 
 function onLoad() {
     menuContentDivEl = document.getElementById('user-menu-content');
+    adminMenuContentDivEl = document.getElementById('admin-menu-content');
     loginContentDivEl = document.getElementById('login-content');
     registerContentDivEl = document.getElementById('register-content');
     profileButtonDivEl = document.getElementById('back-to-profile-content');
@@ -135,7 +138,8 @@ function onLoad() {
     searchContentDivEl = document.getElementById('search-content');
     shoppingContentDivEl = document.getElementById('shopping-list-content');
     logoutContentDivEl = document.getElementById('logout-content');
-    resultsContentDivEl = document.getElementById('results-content')
+    resultsContentDivEl = document.getElementById('results-content');
+    adminContentDivEl = document.getElementById('admin-content');
 
     const loginButtonEl = document.getElementById('login-button');
     loginButtonEl.addEventListener('click', onLoginButtonClicked);

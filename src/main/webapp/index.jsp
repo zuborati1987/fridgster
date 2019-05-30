@@ -18,7 +18,9 @@
         <c:url value="/storages.js" var="storagesScriptUrl"/>
         <c:url value="/storage.js" var="storageScriptUrl"/>
         <c:url value="/shopping.js" var="shoppingScriptUrl"/>
+        <c:url value="/admin.js" var="adminScriptUrl"/>
 
+        <script src="${adminScriptUrl}"></script>
         <script src="${shoppingScriptUrl}"></script>
         <script src="${storageScriptUrl}"></script>
         <script src="${storagesScriptUrl}"></script>
@@ -41,7 +43,17 @@
             <td><a href="javascript:void(0);" onclick="onStoragesClicked();">Storages</a></td>
             <td><a href="javascript:void(0);" onclick="onSearchClicked();">Search</a></td>
             <td><a href="javascript:void(0);" onclick="onShoppingListClicked();">Shopping List</a></td>
-            <td><a href="javascript:void(0);" id="logout-button" onclick=onLogoutButtonClicked()>Logout </a></td>
+            <td><a href="javascript:void(0);" id="logout-button" onclick=onLogoutButtonClicked()>Logout</a></td>
+    </table>
+</div>
+<div id="admin-menu-content" class="hidden content">
+    <table>
+        <tr id= admin-menu-tr>
+            <td><a href="javascript:void(0);" onclick="onStoragesClicked();">Storages</a></td>
+            <td><a href="javascript:void(0);" onclick="onSearchClicked();">Search</a></td>
+            <td><a href="javascript:void(0);" onclick="onShoppingListClicked();">Shopping List</a></td>
+            <td><a href="javascript:void(0);" id="admin-button" onclick=onAdminButtonClicked()>Admin</a></td>
+            <td><a href="javascript:void(0);" onclick=onLogoutButtonClicked()>Logout</a></td>
     </table>
 </div>
 <div id="login-content" class="content">
@@ -177,6 +189,20 @@
         <input type="text" name="measurement">
         <button onclick="onShoppingAddClicked();">Add</button>
     </form>
+</div>
+<div id="admin-content" class="hidden content">
+    <h1>Users</h1>
+    <table id="users">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>E-mail</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <button onclick="onUserDeleteClicked();">Delete</button>
 </div>
 </body>
 </html>

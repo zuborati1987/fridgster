@@ -1,6 +1,10 @@
 function onSearchClicked() {
     clearMessages();
-    showContents(['search-content', 'logout-content', 'user-menu-content']);
+    if(getAuthorization().admin === true) {
+        showContents(['search-content', 'logout-content', 'admin-menu-content']);
+    } else {
+        showContents(['search-content', 'logout-content', 'user-menu-content']);
+    }
 }
 
 function onOptionSelected() {
@@ -34,7 +38,11 @@ function onSearchByName() {
 
 function onSearchResponse() {
     if (this.status === OK) {
-        showContents(['user-menu-content','results-content', 'search-content', 'logout-content']);
+        if(getAuthorization().admin === true) {
+            showContents(['admin-menu-content','results-content', 'search-content', 'logout-content']);
+        } else {
+            showContents(['user-menu-content','results-content', 'search-content', 'logout-content']);
+        }
         onSearchLoad(JSON.parse(this.responseText));
     } else {
         onOtherResponse(resultsContentDivEl, this);

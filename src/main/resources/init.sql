@@ -20,7 +20,7 @@ CREATE TABLE storages (
       name TEXT NOT NULL,
       user_id INTEGER,
       CONSTRAINT name_not_empty CHECK (name <> ''),
-      FOREIGN KEY (user_id) REFERENCES users(id)
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE categories (
@@ -28,7 +28,7 @@ CREATE TABLE categories (
     name TEXT NOT NULL,
     user_id INTEGER,
     CONSTRAINT name_not_empty CHECK (name <> ''),
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE measurements (
@@ -36,7 +36,7 @@ CREATE TABLE measurements (
       name TEXT NOT NULL,
       user_id INTEGER,
       CONSTRAINT name_not_empty CHECK (name <> ''),
-      FOREIGN KEY (user_id) REFERENCES users(id)
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE food (
@@ -50,7 +50,7 @@ CREATE TABLE food (
       user_id INTEGER,
       CONSTRAINT name_not_empty CHECK (name <> ''),
       CONSTRAINT amount_not_negative CHECK (amount >= 0),
-      FOREIGN KEY (user_id) REFERENCES users(id),
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
       FOREIGN KEY (category_id) REFERENCES categories(id),
       FOREIGN KEY (measurement_id) REFERENCES measurements(id),
       FOREIGN KEY (storage_id) REFERENCES storages(id)
