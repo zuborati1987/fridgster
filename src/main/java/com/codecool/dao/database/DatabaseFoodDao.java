@@ -165,11 +165,11 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
     }*/
 
     @Override
-    public void delete(String name, int userId) throws SQLException {
-        String sql = "DELETE FROM food WHERE name = ? AND user_id = ?;";
+    public void delete(int foodId, int userId) throws SQLException {
+        String sql = "DELETE FROM food WHERE id = ? AND user_id = ?;";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, name);
+            statement.setInt(1, foodId);
             statement.setInt(2, userId);
             statement.executeUpdate();
         }

@@ -17,8 +17,9 @@
         <c:url value="/search.js" var="searchScriptUrl"/>
         <c:url value="/storages.js" var="storagesScriptUrl"/>
         <c:url value="/storage.js" var="storageScriptUrl"/>
+        <c:url value="/shopping.js" var="shoppingScriptUrl"/>
 
-
+        <script src="${shoppingScriptUrl}"></script>
         <script src="${storageScriptUrl}"></script>
         <script src="${storagesScriptUrl}"></script>
         <script src="${authScriptUrl}"></script>
@@ -91,9 +92,10 @@
         <tbody>
         </tbody>
     </table>
+    <button onclick="onStorageDeleteClicked();">Delete</button>
     <h2>Add new storage</h2>
     <form id="storage-form" onsubmit="return false;">
-        <input type="text" name="name">
+        <input type="text" id="addStorage">
         <button onclick="onStorageAddClicked();">Add</button>
     </form>
 </div>
@@ -112,12 +114,13 @@
         <tbody>
         </tbody>
     </table>
+    <button onclick="onContentDeleteClicked();">Delete</button>
     <h2>Add new food item</h2>
     <form id="food-form" onsubmit="return false;">
-        <input type="text" name="name">
-        <input type="text" name="category">
-        <input type="number" step="any" name="amount"/>
-        <input type="text" name="measurement">
+        <input type="text" name="name" placeholder="name">
+        <input type="text" name="category" placeholder="category">
+        <input type="number" step="any" name="amount" placeholder="amount"/>
+        <input type="text" name="measurement" placeholder="measurement">
         <input type="date" name="expiry">
         <button onclick="onFoodAddClicked();">Add</button>
     </form>
@@ -151,11 +154,11 @@
         <tbody>
         </tbody>
     </table>
-    </table>
     </form>
+        <button onclick="onFoodDeleteClicked();">Delete</button>
 </div>
 <div id="shopping-list-content" class="hidden content">
-    <table id="shoppinglist">
+    <table id="required">
         <thead>
         <tr>
             <th>Name</th>
@@ -166,6 +169,7 @@
         <tbody>
         </tbody>
     </table>
+    <button onclick="onShoppingDeleteClicked();">Delete</button>
     <h2>Add new item to shopping list</h2>
     <form id="shopping-form" onsubmit="return false;">
         <input type="text" name="name">

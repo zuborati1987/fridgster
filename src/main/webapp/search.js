@@ -73,6 +73,8 @@ function appendResult(resultData) {
     let expiryDate = new Date(convertDate(resultData.expiry));
     expiryTdEl.textContent = getDateStr(expiryDate);
     const trEl = document.createElement('tr');
+    const delChkBox = createCheckBoxTd('food-del', resultData.id);
+
 
     trEl.appendChild(nameTdEl);
     trEl.appendChild(categoryTdEl);
@@ -80,5 +82,16 @@ function appendResult(resultData) {
     trEl.appendChild(measurementTdEl);
     trEl.appendChild(storageTdEl);
     trEl.appendChild(expiryTdEl);
+    trEl.appendChild(delChkBox);
     resultsTableBodyEl.appendChild(trEl);
+}
+
+function onFoodDeleteClicked() {
+    const idStrChain = getCheckBoxCheckedValues('food-del');
+
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener('load', onSearchClicked);
+    xhr.addEventListener('error', onNetworkError);
+    xhr.open('DELETE', 'protected/search?foodIds=' + idStrChain);
+    xhr.send();
 }

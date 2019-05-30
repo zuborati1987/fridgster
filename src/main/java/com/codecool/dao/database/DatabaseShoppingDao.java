@@ -1,15 +1,33 @@
 package com.codecool.dao.database;
 
 import com.codecool.dao.ShoppingDao;
+import com.codecool.model.Food;
+import com.codecool.model.ShoppingList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseShoppingDao extends AbstractDao implements ShoppingDao {
-    DatabaseShoppingDao(Connection connection) {
+    public DatabaseShoppingDao(Connection connection) {
         super(connection);
+    }
+
+
+    @Override
+    public List<ShoppingList> findAll(int userId) throws SQLException {
+        List<ShoppingList> shoppingList = new ArrayList<>();
+        String sql = "SELECT f.name AS name, m.name AS measurement, shopping_lists.amount AS amount FROM shopping_lists INNER JOIN food f on shopping_lists.food_id = f.id INNER JOIN measurements m on f.measurement_id = m.id WHERE shopping_lists.user_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            try(ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    shoppingList.add(fetchShoppingList(resultSet));
+                }
+            }
+        }
+        return shoppingList;
     }
 
     @Override
@@ -32,13 +50,20 @@ public class DatabaseShoppingDao extends AbstractDao implements ShoppingDao {
     }
 
     @Override
-    public void delete(int foodId, int userId) throws SQLException {
+    public void delete(int userId, int shoppingId) throws SQLException {
         String sql = "DELETE FROM shopping_lists WHERE food_id = ? AND user_id = ?;";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, foodId);
+            statement.setInt(1, shoppingId);
             statement.setInt(2, userId);
             statement.executeUpdate();
         }
+    }
+
+    private ShoppingList fetchShoppingList(ResultSet resultSet) throws SQLException {
+        String name = resultSet.getString("name");
+        double amount = resultSet.getDouble("amount");
+        String measurement = resultSet.getString("measurement");
+        return new ShoppingList(name, amount, measurement);
     }
 }

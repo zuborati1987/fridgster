@@ -10,4 +10,9 @@ import java.util.List;
 public interface StorageService {
 
     List<Storage> findAll(String id) throws SQLException, ServiceException;
+
+    Storage add(String name, String userId) throws SQLException, ServiceException;
+
+    void delete(String storageIdChain, int userId) throws SQLException, ServiceException;
+
 }

@@ -1,6 +1,7 @@
 package com.codecool.dao;
 
 import com.codecool.model.Food;
+import com.codecool.model.ShoppingList;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -29,5 +30,7 @@ public interface FoodDao {
     Food add(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException;
 */
 
-    void delete(String name, int userId) throws SQLException;
+    void delete(int foodId, int userId) throws SQLException;
+
+
 }

@@ -62,8 +62,8 @@ CREATE TABLE shopping_lists (
     amount DOUBLE PRECISION,
     CONSTRAINT amount_not_zero CHECK (amount > 0),
     PRIMARY KEY (user_id, food_id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (food_id) REFERENCES food(id)
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (food_id) REFERENCES food(id) ON DELETE CASCADE
 );
 
 INSERT INTO users (email, password, admin) VALUES

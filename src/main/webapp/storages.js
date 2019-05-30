@@ -44,11 +44,37 @@ function appendStorage(storageData) {
 
     const nameTdEl = document.createElement('td');
     nameTdEl.appendChild(aEl);
+    const delChkBox = createCheckBoxTd('storage-del', storageData.id);
+
 
     const trEl = document.createElement('tr');
 
     trEl.appendChild(nameTdEl);
+    trEl.appendChild(delChkBox);
     storagesTableBodyEl.appendChild(trEl);
 }
 
+function onStorageAddClicked() {
+    clearMessages();
+    showContents(['storages-content', 'logout-content', 'user-menu-content']);
 
+    const toAdd = document.getElementById("addStorage").value;
+    const params = new URLSearchParams();
+    params.append('toAdd', toAdd);
+
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener('load', onStoragesClicked);
+    xhr.addEventListener('error', onNetworkError);
+    xhr.open('POST', 'protected/storages');
+    xhr.send(params);
+}
+
+function onStorageDeleteClicked() {
+    const idStrChain = getCheckBoxCheckedValues('storage-del');
+
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener('load', onStoragesClicked);
+    xhr.addEventListener('error', onNetworkError);
+    xhr.open('DELETE', 'protected/storages?storageIds=' + idStrChain);
+    xhr.send();
+}

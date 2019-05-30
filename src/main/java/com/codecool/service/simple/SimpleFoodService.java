@@ -47,4 +47,11 @@ public class SimpleFoodService extends AbstractService implements FoodService {
     public List<Food> findByStorage(String user_id, String storageId) throws SQLException, ServiceException {
         return foodDao.findByStorage(user_id, storageId);
     }
+
+    public void delete(String foodIdChain, int userId) throws SQLException, ServiceException {
+        String[] ids = foodIdChain.split(",");
+        for (String id : ids) {
+            foodDao.delete(fetchInt(id, "id"), userId);
+        }
+    }
 }

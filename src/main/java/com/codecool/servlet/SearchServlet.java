@@ -8,6 +8,7 @@ import com.codecool.service.FoodService;
 import com.codecool.service.exception.ServiceException;
 import com.codecool.service.simple.SimpleFoodService;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +49,23 @@ public class SearchServlet extends AbstractServlet {
             }
 
             sendMessage(resp, SC_OK, food);
+        } catch (SQLException | ServiceException ex) {
+            handleSqlError(resp, ex);
+        }
+    }
+
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        try (Connection connection = getConnection(req.getServletContext())) {
+            FoodDao foodDao = new DatabaseFoodDao(connection);
+            FoodService foodService = new SimpleFoodService(foodDao);
+
+            User loggedInUser = (User) req.getSession().getAttribute("user");
+            int userId = loggedInUser.getId();
+            String foodIdChain = req.getParameter("foodIds");
+            foodService.delete(foodIdChain, userId);
+
+            sendMessage(resp, SC_OK, "Food item deleted");
         } catch (SQLException | ServiceException ex) {
             handleSqlError(resp, ex);
         }

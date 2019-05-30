@@ -44,7 +44,7 @@ public final class DatabaseStorageDao extends AbstractDao implements StorageDao 
     }
 
     @Override
-    public Storage add(String name, int userId) throws SQLException {
+    public Storage add(String name, String userId) throws SQLException {
         if (name == null || "".equals(name)) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
@@ -53,11 +53,11 @@ public final class DatabaseStorageDao extends AbstractDao implements StorageDao 
         String sql = "INSERT INTO storages (name, user_id) VALUES (?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             statement.setString(1, name);
-            statement.setInt(2, userId);
+            statement.setInt(2, Integer.parseInt(userId));
             executeInsert(statement);
             int id = fetchGeneratedId(statement);
             connection.commit();
-            return new Storage(id, name, userId);
+            return new Storage(id, name, Integer.parseInt(userId));
         } catch (SQLException ex) {
             connection.rollback();
             throw ex;
@@ -79,11 +79,11 @@ public final class DatabaseStorageDao extends AbstractDao implements StorageDao 
     }
 
     @Override
-    public void delete(String name, int userId) throws SQLException {
-        String sql = "DELETE FROM storages WHERE name = ? AND user_id = ?;";
+    public void delete(int userId, int storageId) throws SQLException {
+        String sql = "DELETE FROM storages WHERE id = ? AND user_id = ?;";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, name);
+            statement.setInt(1, storageId);
             statement.setInt(2, userId);
             statement.executeUpdate();
         }

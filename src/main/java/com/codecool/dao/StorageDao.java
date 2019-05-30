@@ -11,9 +11,9 @@ public interface StorageDao {
 
     Storage findById(String id) throws SQLException;
 
-    Storage add(String name, int userId) throws SQLException;
+    Storage add(String name, String userId) throws SQLException;
 
     void update(int userId, int scheduleId, String newName) throws SQLException;
 
-    void delete(String name, int userId) throws SQLException;
+    void delete(int userId, int storageId) throws SQLException;
 }

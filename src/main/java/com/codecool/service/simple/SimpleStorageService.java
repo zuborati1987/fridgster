@@ -23,4 +23,15 @@ public class SimpleStorageService extends AbstractService implements StorageServ
     public List<Storage> findAll(String id) throws SQLException, ServiceException {
         return storageDao.findAll(id);
     }
+
+    public Storage add(String name, String userId) throws SQLException, ServiceException {
+        return storageDao.add(name, userId);
+    }
+
+    public void delete(String storageIdChain, int userId) throws SQLException, ServiceException {
+        String[] ids = storageIdChain.split(",");
+        for (String id : ids) {
+            storageDao.delete(userId, fetchInt(id, "id"));
+        }
+    }
 }

@@ -13,6 +13,7 @@ import com.codecool.service.exception.ServiceException;
 import com.codecool.service.simple.SimpleFoodService;
 import com.codecool.service.simple.SimpleStorageService;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +39,44 @@ public class StoragesServlet extends AbstractServlet {
 
             List<Storage> storages = storageService.findAll(id);
             sendMessage(resp, SC_OK, storages);
+        } catch (SQLException | ServiceException ex) {
+            handleSqlError(resp, ex);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try (Connection connection = getConnection(req.getServletContext())) {
+
+            User loggedInUser = (User) req.getSession().getAttribute("user");
+            String id = String.valueOf(loggedInUser.getId());
+
+            String name = req.getParameter("toAdd");
+
+            StorageDao storageDao = new DatabaseStorageDao(connection);
+            StorageService storageService = new SimpleStorageService(storageDao);
+
+            storageService.add(name, id);
+
+            sendMessage(resp, SC_OK, "New storage added");
+        } catch (SQLException | ServiceException ex) {
+            handleSqlError(resp, ex);
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        try (Connection connection = getConnection(req.getServletContext())) {
+            StorageDao storageDao = new DatabaseStorageDao(connection);
+            StorageService storageService = new SimpleStorageService(storageDao);
+
+            User loggedInUser = (User) req.getSession().getAttribute("user");
+            int userId = loggedInUser.getId();
+            String storageIdChain = req.getParameter("storageIds");
+            storageService.delete(storageIdChain, userId);
+
+            sendMessage(resp, SC_OK, "Storage deleted");
         } catch (SQLException | ServiceException ex) {
             handleSqlError(resp, ex);
         }

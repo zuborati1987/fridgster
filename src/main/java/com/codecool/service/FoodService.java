@@ -21,4 +21,7 @@ public interface FoodService{
     List<Food> findByName(String name, String userId) throws SQLException;
 
     List<Food> findByStorage(String user_id, String storageId) throws SQLException, ServiceException;
+
+    void delete(String foodIdChain, int userId) throws SQLException, ServiceException;
+
 }
