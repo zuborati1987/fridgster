@@ -195,7 +195,6 @@
     <table id="users">
         <thead>
         <tr>
-            <th>Name</th>
             <th>E-mail</th>
         </tr>
         </thead>

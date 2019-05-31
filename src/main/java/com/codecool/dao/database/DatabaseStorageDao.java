@@ -50,10 +50,12 @@ public final class DatabaseStorageDao extends AbstractDao implements StorageDao 
         }
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO storages (name, user_id) VALUES (?, ?)";
+        String sql = "INSERT INTO storages (name, user_id) SELECT ?, ? WHERE NOT EXISTS(SELECT * FROM storages WHERE name= ? AND user_id = ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             statement.setString(1, name);
             statement.setInt(2, Integer.parseInt(userId));
+            statement.setString(3, name);
+            statement.setInt(4, Integer.parseInt(userId));
             executeInsert(statement);
             int id = fetchGeneratedId(statement);
             connection.commit();

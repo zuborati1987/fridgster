@@ -44,14 +44,11 @@ function appendUsers(users) {
 
 function appendUser(userData) {
 
-    const nameTdEl = document.createElement('td');
-    nameTdEl.textContent = userData.name;
     const emailTdEl = document.createElement('td');
     emailTdEl.textContent = userData.email;
     const delChkBox = createCheckBoxTd('user-del', userData.id);
     const trEl = document.createElement('tr');
 
-    trEl.appendChild(nameTdEl);
     trEl.appendChild(emailTdEl);
     trEl.appendChild(delChkBox);
     usersTableBodyEl.appendChild(trEl);

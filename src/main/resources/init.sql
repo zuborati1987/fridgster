@@ -51,9 +51,9 @@ CREATE TABLE food (
       CONSTRAINT name_not_empty CHECK (name <> ''),
       CONSTRAINT amount_not_negative CHECK (amount >= 0),
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-      FOREIGN KEY (category_id) REFERENCES categories(id),
-      FOREIGN KEY (measurement_id) REFERENCES measurements(id),
-      FOREIGN KEY (storage_id) REFERENCES storages(id)
+      FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
+      FOREIGN KEY (measurement_id) REFERENCES measurements(id) ON DELETE CASCADE,
+      FOREIGN KEY (storage_id) REFERENCES storages(id) ON DELETE CASCADE
 );
 
 CREATE TABLE shopping_lists (
