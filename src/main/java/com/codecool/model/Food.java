@@ -1,7 +1,7 @@
 package com.codecool.model;
 
-import java.util.Objects;
 import java.time.LocalDate;
+import java.util.Objects;
 
 
 public class Food extends AbstractModel {

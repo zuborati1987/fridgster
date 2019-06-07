@@ -1,10 +1,9 @@
 package com.codecool.model;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 
-public class ShoppingList extends AbstractModel{
+public class ShoppingList extends AbstractModel {
 
     public final String name;
     public final double amount;
@@ -37,7 +36,7 @@ public class ShoppingList extends AbstractModel{
         if (!super.equals(o)) return false;
         ShoppingList shoppingList = (ShoppingList) o;
         return Objects.equals(name, shoppingList.name) &&
-            measurement.equals(shoppingList.measurement) ;
+            measurement.equals(shoppingList.measurement);
     }
 
     @Override

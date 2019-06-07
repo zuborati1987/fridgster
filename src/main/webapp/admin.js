@@ -1,6 +1,6 @@
 function onAdminButtonClicked() {
     clearMessages();
-    if(getAuthorization().admin === true) {
+    if (getAuthorization().admin === true) {
         showContents(['admin-content', 'logout-content', 'admin-menu-content']);
     } else {
         showContents(['welcome-content', 'logout-content', 'user-menu-content']);
@@ -15,7 +15,7 @@ function onAdminButtonClicked() {
 
 function onAdminResponse() {
     if (this.status === OK) {
-        if(getAuthorization().admin === true) {
+        if (getAuthorization().admin === true) {
             showContents(['admin-menu-content', 'admin-content']);
         } else {
             showContents(['user-menu-content', 'welcome-content']);

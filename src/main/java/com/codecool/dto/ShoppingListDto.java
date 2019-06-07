@@ -1,7 +1,6 @@
 package com.codecool.dto;
 
 
-
 import com.codecool.model.Food;
 
 import java.util.List;

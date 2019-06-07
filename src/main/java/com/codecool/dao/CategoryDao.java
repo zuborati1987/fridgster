@@ -11,7 +11,9 @@ public interface CategoryDao {
 
     Category findById(int id) throws SQLException;
 
-    Category add(String name, int userId) throws SQLException;
+    int findIdByName(String name, int userId) throws SQLException;
+
+    int add(String name, int userId) throws SQLException;
 
     void delete(String name, int userId) throws SQLException;
 }

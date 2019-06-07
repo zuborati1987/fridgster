@@ -15,7 +15,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @WebServlet("/register")
-public class RegisterServlet extends AbstractServlet{
+public class RegisterServlet extends AbstractServlet {
 
     private static final String SQL_ERROR_CODE_UNIQUE_VIOLATION = "23505";
 
@@ -30,7 +30,7 @@ public class RegisterServlet extends AbstractServlet{
             String password = req.getParameter("password");
             String repassword = req.getParameter("repassword");
 
-            if(password.equals(repassword)) {
+            if (password.equals(repassword)) {
                 userService.addUser(password, email);
             } else {
                 sendMessage(resp, HttpServletResponse.SC_BAD_REQUEST, "Passwords do not match");

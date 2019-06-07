@@ -35,7 +35,7 @@ public class SearchServlet extends AbstractServlet {
             FoodService foodService = new SimpleFoodService(foodDao);
 
             List<Food> food = new ArrayList<>();
-            if(selected.equals("name")) {
+            if (selected.equals("name")) {
                 food = foodService.findAllByName(id);
             } else if (selected.equals("storage")) {
                 food = foodService.findAllByStorage(id);

@@ -17,6 +17,7 @@ let logoutContentDivEl;
 let resultsContentDivEl;
 let adminContentDivEl;
 let adminMenuContentDivEl;
+let actualContentDivEl;
 
 function newInfo(targetEl, message) {
     newMessage(targetEl, 'info', message);
@@ -97,6 +98,7 @@ function createCheckBoxTd(name, value) {
     return tdEl
 }
 
+
 function getCheckBoxCheckedValues(checkBoxName) {
     const checkBoxEls = document.getElementsByName(checkBoxName);
     let values = [];
@@ -109,6 +111,7 @@ function getCheckBoxCheckedValues(checkBoxName) {
     const valuesStrChain = values.join(',');
     return valuesStrChain;
 }
+
 
 function hasAuthorization() {
     return localStorage.getItem('user') !== null;
@@ -140,16 +143,18 @@ function onLoad() {
     logoutContentDivEl = document.getElementById('logout-content');
     resultsContentDivEl = document.getElementById('results-content');
     adminContentDivEl = document.getElementById('admin-content');
+    actualContentDivEl = document.getElementById('actual-list-content');
+
 
     const loginButtonEl = document.getElementById('login-button');
     loginButtonEl.addEventListener('click', onLoginButtonClicked);
 
-  /*  const registrationButtonEl = document.getElementById('registration-button');
-    registrationButtonEl.addEventListener('click', onRegistrationButtonClicked);
+    /*  const registrationButtonEl = document.getElementById('registration-button');
+      registrationButtonEl.addEventListener('click', onRegistrationButtonClicked);
 
-    const logoutButtonEl = document.getElementById('logout-button');
-    logoutButtonEl.addEventListener('click', onLogoutButtonClicked);
-*/
+      const logoutButtonEl = document.getElementById('logout-button');
+      logoutButtonEl.addEventListener('click', onLogoutButtonClicked);
+  */
     if (hasAuthorization()) {
         onProfileLoad(getAuthorization());
     }

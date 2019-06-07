@@ -1,6 +1,6 @@
 function onSearchClicked() {
     clearMessages();
-    if(getAuthorization().admin === true) {
+    if (getAuthorization().admin === true) {
         showContents(['search-content', 'logout-content', 'admin-menu-content']);
     } else {
         showContents(['search-content', 'logout-content', 'user-menu-content']);
@@ -9,7 +9,7 @@ function onSearchClicked() {
 
 function onOptionSelected() {
 
-    const list  = document.getElementById("list");
+    const list = document.getElementById("list");
     const selected = list.options[list.selectedIndex].value;
     const params = new URLSearchParams();
     params.append('selected', selected);
@@ -38,10 +38,10 @@ function onSearchByName() {
 
 function onSearchResponse() {
     if (this.status === OK) {
-        if(getAuthorization().admin === true) {
-            showContents(['admin-menu-content','results-content', 'search-content', 'logout-content']);
+        if (getAuthorization().admin === true) {
+            showContents(['admin-menu-content', 'results-content', 'search-content', 'logout-content']);
         } else {
-            showContents(['user-menu-content','results-content', 'search-content', 'logout-content']);
+            showContents(['user-menu-content', 'results-content', 'search-content', 'logout-content']);
         }
         onSearchLoad(JSON.parse(this.responseText));
     } else {
@@ -68,7 +68,7 @@ function appendResults(results) {
 function appendResult(resultData) {
 
     const nameTdEl = document.createElement('td');
-    nameTdEl.textContent =resultData.name;
+    nameTdEl.textContent = resultData.name;
     const categoryTdEl = document.createElement('td');
     categoryTdEl.textContent = resultData.category;
     const amountTdEl = document.createElement('td');
@@ -80,8 +80,8 @@ function appendResult(resultData) {
     const expiryTdEl = document.createElement('td');
     let expiryDate = new Date(convertDate(resultData.expiry));
     expiryTdEl.textContent = getDateStr(expiryDate);
-    const trEl = document.createElement('tr');
     const delChkBox = createCheckBoxTd('food-del', resultData.id);
+    const trEl = document.createElement('tr');
 
 
     trEl.appendChild(nameTdEl);
@@ -101,5 +101,15 @@ function onFoodDeleteClicked() {
     xhr.addEventListener('load', onSearchClicked);
     xhr.addEventListener('error', onNetworkError);
     xhr.open('DELETE', 'protected/search?foodIds=' + idStrChain);
+    xhr.send();
+}
+
+function onFoodAddClicked() {
+    const idStrChain = getCheckBoxCheckedValues('food-del');
+
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener('load', onSearchClicked);
+    xhr.addEventListener('error', onNetworkError);
+    xhr.open('POST', 'protected/shopping?foodIds=' + idStrChain);
     xhr.send();
 }

@@ -1,6 +1,5 @@
 package com.codecool.service;
 
-import com.codecool.model.Food;
 import com.codecool.model.Storage;
 import com.codecool.service.exception.ServiceException;
 

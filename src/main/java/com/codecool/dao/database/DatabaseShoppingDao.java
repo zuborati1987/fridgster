@@ -1,11 +1,9 @@
 package com.codecool.dao.database;
 
 import com.codecool.dao.ShoppingDao;
-import com.codecool.model.Food;
 import com.codecool.model.ShoppingList;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class DatabaseShoppingDao extends AbstractDao implements ShoppingDao {
         String sql = "SELECT f.id AS id, f.name AS name, m.name AS measurement, shopping_lists.amount AS amount FROM shopping_lists INNER JOIN food f on shopping_lists.food_id = f.id INNER JOIN measurements m on f.measurement_id = m.id WHERE shopping_lists.user_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, userId);
-            try(ResultSet resultSet = statement.executeQuery()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     shoppingList.add(fetchShoppingList(resultSet));
                 }
@@ -31,15 +29,29 @@ public class DatabaseShoppingDao extends AbstractDao implements ShoppingDao {
     }
 
     @Override
-    public void add(int userId, int foodId, double amount) throws SQLException {
+    public List<ShoppingList> findAllActual(int userId) throws SQLException {
+        List<ShoppingList> shoppingList = new ArrayList<>();
+        String sql = "SELECT f.id AS id, f.name AS name, m.name AS measurement, (shopping_lists.amount - f.amount) AS amount FROM shopping_lists INNER JOIN food f on shopping_lists.food_id = f.id INNER JOIN measurements m on f.measurement_id = m.id WHERE shopping_lists.user_id = ? AND shopping_lists.amount > f.amount";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    shoppingList.add(fetchShoppingList(resultSet));
+                }
+            }
+        }
+        return shoppingList;
+    }
+
+    @Override
+    public void add(int userId, int foodId) throws SQLException {
         boolean autoCommit = connection.getAutoCommit();
         connection.setAutoCommit(false);
-        String sql = "INSERT INTO shopping_lists (user_id, food_id, amount) VALUES (?, ?, ?)";
+        String sql = "SELECT \"shopping_adder\"(?,?)";
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             statement.setInt(1, userId);
             statement.setInt(2, foodId);
-            statement.setDouble(3, amount);
-            executeInsert(statement);
+            statement.execute();
             connection.commit();
         } catch (SQLException ex) {
             connection.rollback();
@@ -56,6 +68,18 @@ public class DatabaseShoppingDao extends AbstractDao implements ShoppingDao {
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, shoppingId);
             statement.setInt(2, userId);
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    public void update(int shoppingId, int number, int userId) throws SQLException {
+        String sql = "UPDATE shopping_lists SET amount = (amount + (? - amount))  WHERE user_id = ? AND food_id = ?;";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setDouble(1, number);
+            statement.setInt(2, userId);
+            statement.setInt(3, shoppingId);
             statement.executeUpdate();
         }
     }

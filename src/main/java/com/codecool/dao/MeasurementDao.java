@@ -11,7 +11,9 @@ public interface MeasurementDao {
 
     Measurement findById(int id) throws SQLException;
 
-    Measurement add(String name, int userId) throws SQLException;
+    int findIdByName(String name, int userId) throws SQLException;
+
+    int add(String name, int userId) throws SQLException;
 
     void delete(String name, int userId) throws SQLException;
 

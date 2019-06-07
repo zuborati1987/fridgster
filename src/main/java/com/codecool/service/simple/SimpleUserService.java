@@ -5,7 +5,6 @@ import com.codecool.model.User;
 import com.codecool.service.UserService;
 import com.codecool.service.exception.ServiceException;
 
-
 import java.sql.SQLException;
 import java.util.List;
 

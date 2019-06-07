@@ -1,7 +1,6 @@
-
 function onProfileLoad() {
     clearMessages();
-    if(getAuthorization().admin === true) {
+    if (getAuthorization().admin === true) {
         showContents(['welcome-content', 'logout-content', 'admin-menu-content']);
     } else {
         showContents(['welcome-content', 'logout-content', 'user-menu-content']);
@@ -16,7 +15,7 @@ function onProfileLoad() {
 
 function onExpiryResponse() {
     if (this.status === OK) {
-        if(getAuthorization().admin === true) {
+        if (getAuthorization().admin === true) {
             showContents(['admin-menu-content', 'welcome-content']);
         } else {
             showContents(['user-menu-content', 'welcome-content']);
@@ -44,15 +43,9 @@ function appendExpiry(expiries) {
 }
 
 function appendExpiryEl(expiryData) {
-    const aEl = document.createElement('a');
-    aEl.textContent = expiryData.name;
-    aEl.href = 'javascript:void(0);';
-    aEl.dataset.expiryId = expiryData.id;
-    aEl.addEventListener('click', onExpiryClicked);
-
 
     const nameTdEl = document.createElement('td');
-    nameTdEl.appendChild(aEl);
+    nameTdEl.textContent = expiryData.name;
     const expiryTdEl = document.createElement('td');
     let expiryDate = new Date(convertDate(expiryData.expiry));
     expiryTdEl.textContent = getDateStr(expiryDate);
@@ -61,8 +54,4 @@ function appendExpiryEl(expiryData) {
     trEl.appendChild(nameTdEl);
     trEl.appendChild(expiryTdEl);
     expiryTableBodyEl.appendChild(trEl);
-}
-
-function onExpiryClicked() {
-    console.log("to implement");
 }

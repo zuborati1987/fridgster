@@ -1,9 +1,7 @@
 package com.codecool.dao;
 
 import com.codecool.model.Food;
-import com.codecool.model.ShoppingList;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -26,9 +24,11 @@ public interface FoodDao {
 
     List<Food> findByStorage(String user_id, String storageId) throws SQLException;
 
-/*
-    Food add(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException;
-*/
+
+    void add(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException;
+
+    void update(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException;
+
 
     void delete(int foodId, int userId) throws SQLException;
 

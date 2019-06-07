@@ -41,7 +41,22 @@ public final class DatabaseMeasurementDao extends AbstractDao implements Measure
     }
 
     @Override
-    public Measurement add(String name, int userId) throws SQLException {
+    public int findIdByName(String name, int userId) throws SQLException {
+        String sql = "SELECT id FROM measurements WHERE name = ? AND user_id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, name);
+            statement.setInt(2, userId);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("id");
+                }
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public int add(String name, int userId) throws SQLException {
         if (name == null || "".equals(name)) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
@@ -51,10 +66,10 @@ public final class DatabaseMeasurementDao extends AbstractDao implements Measure
         try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             statement.setString(1, name);
             statement.setInt(2, userId);
-            executeInsert(statement);
+            statement.executeQuery();
             int id = fetchGeneratedId(statement);
             connection.commit();
-            return new Measurement(id, name, userId);
+            return id;
         } catch (SQLException ex) {
             connection.rollback();
             throw ex;

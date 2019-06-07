@@ -6,6 +6,7 @@ import com.codecool.service.FoodService;
 import com.codecool.service.exception.ServiceException;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class SimpleFoodService extends AbstractService implements FoodService {
@@ -15,6 +16,7 @@ public class SimpleFoodService extends AbstractService implements FoodService {
     public SimpleFoodService(FoodDao foodDao) {
         this.foodDao = foodDao;
     }
+
     @Override
     public List<Food> findExpiries(String userId) throws SQLException {
         return foodDao.findAllByExpiry(userId);
@@ -53,5 +55,13 @@ public class SimpleFoodService extends AbstractService implements FoodService {
         for (String id : ids) {
             foodDao.delete(fetchInt(id, "id"), userId);
         }
+    }
+
+    public void add(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException{
+        foodDao.add(name, categoryId, amount, measurementId, storageId, expiry, userId);
+    }
+
+    public void update(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException {
+        foodDao.update(name, categoryId, amount, measurementId, storageId, expiry, userId);
     }
 }

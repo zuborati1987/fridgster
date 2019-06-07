@@ -33,7 +33,7 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
         String sql = "SELECT food.id, food.name, c.name AS category, amount, m.name AS measurement, s.name AS storage, expiry, food.user_id as user_id FROM food INNER JOIN categories c on food.category_id = c.id INNER JOIN measurements m on food.measurement_id = m.id INNER JOIN storages s on food.storage_id = s.id WHERE food.user_id = ? ORDER BY name ASC";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(userId));
-            try(ResultSet resultSet = statement.executeQuery()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     foods.add(fetchFood(resultSet));
                 }
@@ -48,7 +48,7 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
         String sql = "SELECT food.id, food.name, c.name AS category, amount, m.name AS measurement, s.name AS storage, expiry, food.user_id as user_id FROM food INNER JOIN categories c on food.category_id = c.id INNER JOIN measurements m on food.measurement_id = m.id INNER JOIN storages s on food.storage_id = s.id WHERE food.user_id = ? ORDER BY c.name ASC";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(userId));
-            try(ResultSet resultSet = statement.executeQuery()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     foods.add(fetchFood(resultSet));
                 }
@@ -63,7 +63,7 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
         String sql = "SELECT food.id, food.name, c.name AS category, amount, m.name AS measurement, s.name AS storage, expiry, food.user_id as user_id FROM food INNER JOIN categories c on food.category_id = c.id INNER JOIN measurements m on food.measurement_id = m.id INNER JOIN storages s on food.storage_id = s.id WHERE food.user_id = ? ORDER BY s.name ASC";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(userId));
-            try(ResultSet resultSet = statement.executeQuery()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     foods.add(fetchFood(resultSet));
                 }
@@ -78,7 +78,7 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
         String sql = "SELECT food.id, food.name, c.name AS category, amount, m.name AS measurement, s.name AS storage, expiry, food.user_id as user_id FROM food INNER JOIN categories c on food.category_id = c.id INNER JOIN measurements m on food.measurement_id = m.id INNER JOIN storages s on food.storage_id = s.id WHERE food.user_id = ? ORDER BY expiry ASC";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(userId));
-            try(ResultSet resultSet = statement.executeQuery()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     foods.add(fetchFood(resultSet));
                 }
@@ -133,8 +133,8 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
         return foods;
     }
 
-    /*@Override
-    public Food add(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException {
+    @Override
+    public void add(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException {
         if (name == null || "".equals(name)) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
@@ -153,16 +153,30 @@ public class DatabaseFoodDao extends AbstractDao implements FoodDao {
             statement.setObject(6, expiry);
             statement.setInt(7, userId);
             executeInsert(statement);
-            int id = fetchGeneratedId(statement);
             connection.commit();
-            return new Food(id, name, categoryId, amount, measurementId, storageId, expiry, userId);
         } catch (SQLException ex) {
             connection.rollback();
             throw ex;
         } finally {
             connection.setAutoCommit(autoCommit);
         }
-    }*/
+    }
+
+    @Override
+    public void update(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException {
+        String sql = "UPDATE food SET amount = (amount + ?)  WHERE name = ? AND category_id = ? AND measurement_id = ? AND storage_id = ? AND expiry = ? AND user_id = ?;";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setDouble(1, amount);
+            statement.setString(2, name);
+            statement.setInt(3, categoryId);
+            statement.setInt(4, measurementId);
+            statement.setInt(5, storageId);
+            statement.setObject(6, expiry);
+            statement.setInt(7, userId);
+            statement.executeUpdate();
+        }
+    }
 
     @Override
     public void delete(int foodId, int userId) throws SQLException {

@@ -4,9 +4,10 @@ import com.codecool.model.Food;
 import com.codecool.service.exception.ServiceException;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
-public interface FoodService{
+public interface FoodService {
 
     List<Food> findExpiries(String userId) throws SQLException, ServiceException;
 
@@ -24,4 +25,7 @@ public interface FoodService{
 
     void delete(String foodIdChain, int userId) throws SQLException, ServiceException;
 
+    void add(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException;
+
+    void update(String name, int categoryId, double amount, int measurementId, int storageId, LocalDate expiry, int userId) throws SQLException;
 }

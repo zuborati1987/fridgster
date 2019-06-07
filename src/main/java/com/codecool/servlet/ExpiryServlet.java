@@ -7,6 +7,7 @@ import com.codecool.model.User;
 import com.codecool.service.FoodService;
 import com.codecool.service.exception.ServiceException;
 import com.codecool.service.simple.SimpleFoodService;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

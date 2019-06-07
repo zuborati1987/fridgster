@@ -1,6 +1,6 @@
 function onStoragesClicked() {
     clearMessages();
-    if(getAuthorization().admin === true) {
+    if (getAuthorization().admin === true) {
         showContents(['storages-content', 'logout-content', 'admin-menu-content']);
     } else {
         showContents(['storages-content', 'logout-content', 'user-menu-content']);
@@ -15,10 +15,10 @@ function onStoragesClicked() {
 
 function onStoragesResponse() {
     if (this.status === OK) {
-        if(getAuthorization().admin === true) {
-            showContents(['admin-menu-content','storages-content']);
+        if (getAuthorization().admin === true) {
+            showContents(['admin-menu-content', 'storages-content']);
         } else {
-            showContents(['user-menu-content','storages-content']);
+            showContents(['user-menu-content', 'storages-content']);
         }
         onStoragesLoad(JSON.parse(this.responseText));
     } else {
@@ -64,7 +64,7 @@ function appendStorage(storageData) {
 
 function onStorageAddClicked() {
     clearMessages();
-    if(getAuthorization().admin === true) {
+    if (getAuthorization().admin === true) {
         showContents(['storages-content', 'logout-content', 'admin-menu-content']);
     } else {
         showContents(['storages-content', 'logout-content', 'user-menu-content']);

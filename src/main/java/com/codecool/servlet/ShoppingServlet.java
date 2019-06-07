@@ -1,16 +1,11 @@
 package com.codecool.servlet;
 
-import com.codecool.dao.FoodDao;
 import com.codecool.dao.ShoppingDao;
-import com.codecool.dao.database.DatabaseFoodDao;
 import com.codecool.dao.database.DatabaseShoppingDao;
-import com.codecool.model.Food;
 import com.codecool.model.ShoppingList;
 import com.codecool.model.User;
-import com.codecool.service.FoodService;
 import com.codecool.service.ShoppingService;
 import com.codecool.service.exception.ServiceException;
-import com.codecool.service.simple.SimpleFoodService;
 import com.codecool.service.simple.SimpleShoppingService;
 
 import javax.servlet.ServletException;
@@ -37,8 +32,13 @@ public class ShoppingServlet extends AbstractServlet {
             ShoppingDao shoppingDao = new DatabaseShoppingDao(connection);
             ShoppingService shoppingService = new SimpleShoppingService(shoppingDao);
 
-            List<ShoppingList> shoppingList = shoppingService.findAll(id);
-
+            List<ShoppingList> shoppingList;
+            String actual = req.getParameter("actual");
+            if(actual.equals("actual")) {
+                shoppingList = shoppingService.findAllActual(id);
+            } else {
+                shoppingList = shoppingService.findAll(id);
+            }
 
             sendMessage(resp, SC_OK, shoppingList);
         } catch (SQLException | ServiceException ex) {
@@ -59,6 +59,26 @@ public class ShoppingServlet extends AbstractServlet {
             shoppingService.delete(shoppingIdChain, userId);
 
             sendMessage(resp, SC_OK, "Required item deleted");
+        } catch (SQLException | ServiceException ex) {
+            handleSqlError(resp, ex);
+        }
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        try (Connection connection = getConnection(req.getServletContext())) {
+            ShoppingDao shoppingDao = new DatabaseShoppingDao(connection);
+            ShoppingService shoppingService = new SimpleShoppingService(shoppingDao);
+
+            User loggedInUser = (User) req.getSession().getAttribute("user");
+            int userId = loggedInUser.getId();
+
+            String foodIdChain = req.getParameter("foodIds");
+            shoppingService.add(foodIdChain, userId);
+
+            sendMessage(resp, SC_OK, "Required item updated");
         } catch (SQLException | ServiceException ex) {
             handleSqlError(resp, ex);
         }

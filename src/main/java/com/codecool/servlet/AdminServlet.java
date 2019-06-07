@@ -1,15 +1,10 @@
 package com.codecool.servlet;
 
-import com.codecool.dao.FoodDao;
 import com.codecool.dao.UserDao;
-import com.codecool.dao.database.DatabaseFoodDao;
 import com.codecool.dao.database.DatabaseUserDao;
-import com.codecool.model.Food;
 import com.codecool.model.User;
-import com.codecool.service.FoodService;
 import com.codecool.service.UserService;
 import com.codecool.service.exception.ServiceException;
-import com.codecool.service.simple.SimpleFoodService;
 import com.codecool.service.simple.SimpleUserService;
 
 import javax.servlet.ServletException;

@@ -1,7 +1,6 @@
 package com.codecool.service;
 
 
-
 import com.codecool.model.User;
 import com.codecool.service.exception.ServiceException;
 
